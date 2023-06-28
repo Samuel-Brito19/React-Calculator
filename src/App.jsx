@@ -13,9 +13,15 @@ export const ACTIONS = {
 const myReducer = (state, { type, payload }) => {
   switch (type) {
     case ACTIONS.ADD_DIGIT:
+      if (payload.digit === "0" && state.currentOperatior === "0") {
+        return state
+      }
+      if (payload.digit === "." && state.currentOperatior.includes('.')) {
+        return state
+      }
       return {
         ...state,
-        currentOperatior: `${state.currentOperatior}, ${payload.digit}`
+        currentOperatior: `${state.currentOperatior || ""} ${payload.digit}`
       }
   }
 }
@@ -28,8 +34,8 @@ function App() {
     <div className="calculator-grid">
 
       <div className="painel">
-        <div className="previous-operator"> {currentOperatior} {operatorDigit}</div>
-        <div className="current-operator"> {previousOperator} </div>
+        <div className="previous-operator"> {previousOperator} {operatorDigit}</div>
+        <div className="current-operator"> {currentOperatior} </div>
       </div>
 
 
